@@ -21,17 +21,50 @@ body {
 }
 
 .header {
+  --scroll-timing: 300ms ease-out;
+  --padding: 1.5rem;
   position: sticky;
   top: 0;
-  --padding-vertical: 1.5rem;
-  padding: var(--padding-vertical) 0;
-  --scroll-timing: 300ms ease-out;
-  transition: padding var(--scroll-timing), box-shadow var(--scroll-timing);
+  padding: var(--padding) 0;
+}
+
+.header,
+.nav {
+  transition: transform var(--scroll-timing);
 }
 
 .header--scrolling {
-  --padding-vertical: 1rem;
+  /* original height * -2 / 3 */
+  /* transform: translateY(-1rem); */
+  --height: calc(var(--padding) * -2 / 3);
+}
+
+/* header content */
+.header--scrolling .nav {
+  /* original height / 3 */
+  /* transform: translateY(0.5rem); */
+  --height: calc(var(--padding) / 3);
+}
+
+.header--scrolling,
+.header--scrolling .nav {
+  transform: translateY(var(--height));
+}
+
+.header::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0; /* Hidden by default. */
   box-shadow: 0 8px 40px 0 rgba(10, 10, 10, 0.2);
+  transition: opacity var(--scroll-timing);
+}
+
+.header--scrolling::before {
+  opacity: 1;
 }
 
 .nav__list {
